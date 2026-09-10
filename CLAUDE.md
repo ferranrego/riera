@@ -1,7 +1,12 @@
 # Working on this repo
 
-One codebase, two apps: **Riera** (Catalan, `ca`) and **Darya** (Dari, `prs`).
-The language is chosen at build time from `NEXT_PUBLIC_TARGET_LANG`.
+**Riera** - Catalan (`ca`), deployed at rieralearn.vercel.app.
+
+This was one repo building two apps until it was split. The sibling is
+**Darya** (Dari), at `github.com/ferranrego/darya`, and the two share
+ancestry and identical file paths on purpose - see "Porting from Darya" below.
+The `LanguageProfile` registry in `src/lib/lang/` is kept for that reason, not
+because this repo will ever build a second language.
 
 Read `docs/PEDAGOGY.md` before changing anything that decides what a learner is
 taught: levels, word selection, the generation prompt, difficulty thresholds,
@@ -18,20 +23,20 @@ Each of these shipped, reached a learner, and was invisible until measured.
    If you change something learner-facing, **measure the output**, do not read
    the code and conclude it works.
 
-2. **Both languages, every time.** `pnpm test` and `pnpm validate:content` run
-   against *one* language. Run both:
-   ```
-   pnpm typecheck && pnpm lint
-   for L in ca prs; do NEXT_PUBLIC_TARGET_LANG=$L pnpm test; \
-     NEXT_PUBLIC_TARGET_LANG=$L pnpm validate:content --lang $L; done
-   ```
-   Scripts default to `prs`, so a bare `pnpm validate:content` in a Catalan
-   session validates Dari and reports success.
+2. **One command runs the gate: `pnpm gate`.** It is typecheck, lint, test and
+   validate:content in order. There is one language here now, so the old
+   `for L in ca prs` loop is gone - and so is the trap that made it necessary,
+   where a bare `pnpm validate:content` in a Dari session validated the
+   other language and reported success. The default language is now read from
+   `content/`, so nothing can silently resolve to a language this repo does not
+   ship.
 
-3. **`content/active` is one shared symlink.** Only one language can run
-   locally at a time. Flipping it under a running dev server leaves that server
-   with its own branding and the other language's content, and nothing errors.
-   Restart after switching. Tests no longer touch it - keep it that way.
+3. **`content/active` always points at `content/ca`.** It is written by
+   `scripts/link-content.ts` from `prebuild`/`predev` and there is only one
+   language to point at, so the old hazard - flipping it under a running dev
+   server and serving the other language's content under this one's branding -
+   cannot happen here any more. This is what the split bought: Riera and
+   Darya can now run locally at the same time.
 
 4. **Never delete or renumber a lexicon entry.** `user_words.lexeme_id` is a
    foreign key and cached texts store `lexemeId` inside their JSON. Dropping an
@@ -87,6 +92,45 @@ belonging to a different word, which is exactly `registre`/`registrar`.
   pattern: a philologist found every seed-text token pointing at the wrong
   lexeme, and it is now a permanent check in `validate-content.ts`. A finding
   you only fix will come back.
+
+## Porting from Darya
+
+The two repos were one, so ~80% of any feature commit is files they still share.
+That only stays cheap if porting is a git operation. Two things keep it one:
+**identical file paths** and **shared ancestry**.
+
+```bash
+git fetch darya
+git log --oneline main..darya/main    # what is portable
+./scripts/port.sh <sha>              # cherry-pick, dropping Darya-only files
+pnpm gate
+```
+
+**The one habit that makes this work: keep shared changes in their own commit.**
+Before the split a single commit routinely touched nine shared files *and*
+`lang/ca/prompts.ts` *and* `lang/prs/prompts.ts`. Now write two:
+
+```
+feat(core): show mistakes without the learner asking   <- ports
+feat(ca): interference rules for correction hints    <- never ports
+```
+
+Everything else follows from that. It costs nothing while writing and it is the
+difference between one command and an afternoon.
+
+What ports: `src/` outside `src/lib/lang/ca/`, `supabase/migrations/`, shared
+`scripts/`, `content/schema/`. What never does: `content/ca/` and the profile's
+own prompts, brand and samples - those are this language, by definition.
+
+**Migrations must not drift.** The schema is language-agnostic and identical in
+both databases, so a migration ports 1:1 - but a database that has missed one is
+invisible until a shared code path reads a column that is not there. After
+porting a migration: `npx supabase db push && pnpm validate:db`.
+
+If the repos drift far enough that cherry-picks stop applying, `git merge
+darya/main` still works - shared ancestry makes it a real three-way merge, and
+the conflicts are exactly the files meant to differ (`src/lib/lang/index.ts`,
+`package.json`, this file, brand strings). Resolve to "ours" and move on.
 
 ## Cost and time
 
