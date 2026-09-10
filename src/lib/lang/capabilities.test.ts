@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from "vitest";
-import { PROFILES, profile, type LanguageProfile } from "./index.ts";
+import { PROFILES, REGISTERED_LANGS, profile, type LanguageProfile } from "./index.ts";
 
 /**
  * Capability gating is what lets one codebase serve languages with genuinely
@@ -144,6 +144,8 @@ describe("language profiles", () => {
   });
 
   it("resolves a profile for the active build", () => {
-    expect(profile.code).toBe(process.env.NEXT_PUBLIC_TARGET_LANG ?? "prs");
+    // Compared against the registry, not a literal default. A hardcoded "prs"
+    // here asserted the wrong language in a repo that does not ship it.
+    expect(profile.code).toBe(process.env.NEXT_PUBLIC_TARGET_LANG ?? REGISTERED_LANGS[0]);
   });
 });

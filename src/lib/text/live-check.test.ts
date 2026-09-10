@@ -2,7 +2,7 @@ import { readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 
-import { profile } from "../lang/index.ts";
+import { REGISTERED_LANGS, profile } from "../lang/index.ts";
 import { checkDraft } from "./live-check.ts";
 
 /**
@@ -110,7 +110,7 @@ describe("checkDraft", () => {
  * vocabulary.
  */
 describe("interference rules against shipped content", () => {
-  const LANG = process.env.NEXT_PUBLIC_TARGET_LANG || "prs";
+  const LANG = process.env.NEXT_PUBLIC_TARGET_LANG || REGISTERED_LANGS[0];
   const SEED = join(import.meta.dirname, "..", "..", "..", "content", LANG, "texts", "seed");
 
   function seedSentences(): string[] {

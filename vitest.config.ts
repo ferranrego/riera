@@ -1,6 +1,8 @@
 import { fileURLToPath } from "node:url";
 import { defineConfig } from "vitest/config";
 
+import { soleLanguage } from "./scripts/content-path.ts";
+
 /**
  * Content is namespaced per language (`content/<lang>/…`) and reached through
  * the `@content` alias. The Next build points it at the `content/active`
@@ -19,8 +21,7 @@ import { defineConfig } from "vitest/config";
  */
 const r = (p: string) => fileURLToPath(new URL(p, import.meta.url));
 
-const DEFAULT_LANG = "prs";
-const lang = process.env.NEXT_PUBLIC_TARGET_LANG || DEFAULT_LANG;
+const lang = process.env.NEXT_PUBLIC_TARGET_LANG || soleLanguage();
 
 /**
  * Checks that hit the live provider chain cost API quota, so they stay out of

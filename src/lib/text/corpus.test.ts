@@ -2,7 +2,7 @@ import { readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 import { isKnownToken } from "../ai/vocab-check.ts";
-import { profile } from "../lang/index.ts";
+import { REGISTERED_LANGS, profile } from "../lang/index.ts";
 import { tokenize } from "./index.ts";
 
 /**
@@ -30,7 +30,7 @@ import { tokenize } from "./index.ts";
 // two disagreed, this compared one language's grammar against the other's
 // lexicon and reported 3,608 unresolved tokens - the failure it is meant to
 // detect, arriving for a reason that had nothing to do with the content.
-const LANG = process.env.NEXT_PUBLIC_TARGET_LANG || "prs";
+const LANG = process.env.NEXT_PUBLIC_TARGET_LANG || REGISTERED_LANGS[0];
 const CONTENT = join(import.meta.dirname, "..", "..", "..", "content", LANG);
 // Any letter in any script: the previous Perso-Arabic-only filter silently
 // discarded every Catalan token, leaving nothing to assert on.

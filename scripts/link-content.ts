@@ -23,9 +23,9 @@
  */
 import { existsSync, lstatSync, readdirSync, readlinkSync, rmSync, symlinkSync } from "node:fs";
 import { join } from "node:path";
+import { soleLanguage } from "./content-path.ts";
 
-const DEFAULT_LANG = "prs";
-const lang = process.env.NEXT_PUBLIC_TARGET_LANG || DEFAULT_LANG;
+const lang = process.env.NEXT_PUBLIC_TARGET_LANG || soleLanguage();
 
 const contentDir = join(import.meta.dirname, "..", "content");
 const target = join(contentDir, lang);
