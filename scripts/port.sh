@@ -12,6 +12,13 @@
 # this repo deleted. Those are removed here and left visible in the diff: if a
 # port re-adds the other language, you want to see it, not have it land quietly.
 #
+#
+# NOT everything ports. A commit whose point is to remove the OTHER language's
+# dead data has a *mirror* in this repo, not a copy: porting darya's "drop the
+# dead PRS_SENTENCES block" into darya deleted the Dari sentences darya
+# actually runs, and left it testing Catalan it does not ship. Read what a
+# commit does before porting it; this script cherry-picks, it does not think.
+#
 # What never ports: content/ (different languages), brand strings, and anything
 # under src/lib/lang/<code>/. What always ports cleanly: src/ outside lang/,
 # supabase/migrations/ (apply with `supabase db push` afterwards), and shared
