@@ -53,12 +53,57 @@ export interface BeginnerSpec {
   semanticFields: Record<string, { min: number; seed: string[]; tag?: string }>;
   verbFunctions: Record<string, string[]>;
   descriptiveDimensions: Record<string, string[]>;
+  /**
+   * Speech acts (requesting, permission, offering/inviting, accepting/
+   * declining, agreeing/disagreeing, suggesting, repair, apologising), grouped
+   * by COMMUNICATIVE FUNCTION the way `verbFunctions` groups by semantic
+   * domain. Added after a pedagogy review found the spec had no requirement
+   * for any of them: a learner could describe a room and state facts about
+   * their day, but not politely ask a stranger for anything.
+   */
+  pragmaticFunctions: Record<string, string[]>;
+}
+
+/**
+ * Every category this checker knows how to verify.
+ *
+ * Adding a category to the spec JSON without adding it here would make the
+ * whole category *invisible*: `readSpec` would drop it, `specWords` would omit
+ * it, and the run would cheerfully report "no gaps" for requirements nobody
+ * ever checked. That is not hypothetical - it happened the moment
+ * `pragmaticFunctions` was first added, and the spec sat there fully unchecked
+ * while the checker printed a clean pass. `assertKnownCategories` below turns
+ * that silent omission into a loud failure.
+ */
+const KNOWN_CATEGORIES = [
+  "closedClasses",
+  "semanticFields",
+  "verbFunctions",
+  "descriptiveDimensions",
+  "pragmaticFunctions",
+] as const;
+
+/** A spec category this build cannot verify is a failure, not a no-op. */
+function assertKnownCategories(raw: Record<string, unknown>, path: string): void {
+  const unknown = Object.keys(raw).filter(
+    (k) => !k.startsWith("_") && !(KNOWN_CATEGORIES as readonly string[]).includes(k),
+  );
+  if (unknown.length) {
+    console.error(
+      `${path}: ${unknown.length} category/categories this checker does not know how to ` +
+        `verify: ${unknown.join(", ")}.\n` +
+        `Add each to KNOWN_CATEGORIES, BeginnerSpec, readSpec, specWords and main()'s gap ` +
+        `loop in scripts/verify-beginner-core.ts - otherwise it is silently unchecked.`,
+    );
+    process.exit(1);
+  }
 }
 
 export function readSpec(root: string): BeginnerSpec | null {
   const path = join(root, "lexicon", "beginner-spec.json");
   if (!existsSync(path)) return null;
   const raw = JSON.parse(readFileSync(path, "utf8"));
+  assertKnownCategories(raw, path);
   // `_comment` keys document the file for whoever opens it next; strip them so
   // they are never mistaken for a requirement.
   const strip = <T>(o: Record<string, T>): Record<string, T> =>
@@ -68,6 +113,7 @@ export function readSpec(root: string): BeginnerSpec | null {
     semanticFields: strip(raw.semanticFields ?? {}),
     verbFunctions: strip(raw.verbFunctions ?? {}),
     descriptiveDimensions: strip(raw.descriptiveDimensions ?? {}),
+    pragmaticFunctions: strip(raw.pragmaticFunctions ?? {}),
   };
 }
 
@@ -78,6 +124,7 @@ export function specWords(spec: BeginnerSpec): string[] {
     ...Object.values(spec.semanticFields).flatMap((f) => f.seed),
     ...Object.values(spec.verbFunctions).flat(),
     ...Object.values(spec.descriptiveDimensions).flat(),
+    ...Object.values(spec.pragmaticFunctions).flat(),
   ];
 }
 
@@ -93,7 +140,7 @@ function main() {
   const entries: LexiconEntry[] = lexiconFileSchema.parse(
     JSON.parse(readFileSync(join(root, "lexicon", "lexicon.json"), "utf8")),
   ).entries;
-  const { buildIndex, matchKey } = langProfile(lang).text;
+  const { buildIndex, matchKey, tokenize } = langProfile(lang).text;
   const index = buildIndex(entries);
 
   /**
@@ -121,12 +168,20 @@ function main() {
    * claims once before, so this is deliberately narrow: it only fires when
    * *every* component resolves on its own and is teachable, and the result is
    * reported separately rather than folded into the pass count.
+   *
+   * Split with the production tokenizer, not a bare whitespace split.
+   * Catalan apostrophation means a phrase can be multi-word without a space -
+   * `d'acord`, `t'agradaria` - and a whitespace split never breaks those
+   * apart, so `estic d'acord` reported a false gap under `d'acord` even though
+   * every real component (`d'`, `acord`) already resolved. The pragmatic-
+   * functions category is the one built almost entirely from such phrases, so
+   * this was invisible until that category existed to expose it.
    */
   const compositional = new Set<string>();
   const usable = (word: string): LexiconEntry | null => {
     const hit = direct(word);
     if (hit) return hit;
-    const parts = word.split(/\s+/).filter(Boolean);
+    const parts = tokenize(word);
     if (parts.length < 2) return null;
     const resolved = parts.map(direct);
     if (resolved.some((p) => !p)) return null;
@@ -152,6 +207,14 @@ function main() {
     required += words.length;
     met += words.length - missing.length;
     if (missing.length) gaps.push({ where: `verbs for ${fn}`, missing });
+  }
+
+  // --- pragmatic functions: every speech act must be covered ------------------
+  for (const [fn, words] of Object.entries(spec.pragmaticFunctions)) {
+    const missing = words.filter((w) => !usable(w));
+    required += words.length;
+    met += words.length - missing.length;
+    if (missing.length) gaps.push({ where: `pragmatic function: ${fn}`, missing });
   }
 
   // --- descriptive dimensions: every pole of every dimension ------------------

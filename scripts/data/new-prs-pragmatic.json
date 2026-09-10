@@ -1,0 +1,26 @@
+[
+  {
+    "target": "لحظه",
+    "translit": "lahza",
+    "glossEn": "moment, instant",
+    "pos": "noun",
+    "register": "neutral",
+    "variants": [],
+    "exampleTarget": "لطفاً یک لحظه صبر کنید.",
+    "exampleTranslit": "lutfan yak lahza sabr kunēd.",
+    "exampleEn": "Please wait a moment.",
+    "tags": ["beginner-core", "Time & Calendar"]
+  },
+  {
+    "target": "موافق",
+    "translit": "muwāfiq",
+    "glossEn": "in agreement, agreeing",
+    "pos": "adjective",
+    "register": "neutral",
+    "variants": [],
+    "exampleTarget": "من با تو موافق هستم.",
+    "exampleTranslit": "man bā tu muwāfiq hastam.",
+    "exampleEn": "I agree with you.",
+    "tags": ["beginner-core"]
+  }
+]

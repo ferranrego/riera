@@ -194,6 +194,25 @@ const PRS_SENTENCES = [
   "بسیار تشکر.",
   "ببخشید، نمی‌فهمم.",
   "تا فردا.",
+  // pragmatic functions: requesting, permission, offering/inviting,
+  // accepting/declining, agreeing/disagreeing, suggesting, repair,
+  // apologising - the first-conversation moves the sentences above never
+  // exercised. See `content/prs/lexicon/beginner-spec.json`'s
+  // `pragmaticFunctions` block for why this group exists.
+  "لطفاً یک چای می‌خواهم.",
+  "خواهش می‌کنم، یک لحظه.",
+  "می‌توانم اینجا بمانم؟",
+  "اجازه است بیایم؟",
+  "می‌خواهی با ما بیایی؟",
+  "بیا با ما نان بخور.",
+  "خوب است، می‌آیم.",
+  "امکان ندارد، ببخشید. چیزی نیست.",
+  "من با تو موافق هستم.",
+  "من موافق نیستم.",
+  "چطور است اگر برویم؟",
+  "لطفاً تکرار کنید.",
+  "لطفاً آهسته گپ بزن.",
+  "من نمی‌فهمم. معنی این چی است؟",
 ];
 
 /**
