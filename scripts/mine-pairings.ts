@@ -97,7 +97,7 @@ import {
 import { PROFILES, type TargetLang } from "../src/lib/lang/index.ts";
 import type { LexiconIndex } from "../src/lib/lang/types.ts";
 import { contentRoot, targetLang } from "./content-path.ts";
-import type { SeedTextSource } from "./data/seed-texts-prs.ts";
+import type { SeedTextSource } from "./data/seed-text-source.ts";
 
 // ---------------------------------------------------------------------------
 // Sentence collection

@@ -1,4 +1,4 @@
-import type { SeedTextSource } from "./seed-texts-prs.ts";
+import type { SeedTextSource } from "./seed-text-source.ts";
 
 /**
  * Hand-authored Catalan seed texts. `pnpm build:texts --lang ca` tokenizes

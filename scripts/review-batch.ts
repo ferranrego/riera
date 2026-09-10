@@ -43,7 +43,7 @@ import { isRuledOut, isTeachable } from "../src/lib/content/teachability.ts";
 import { levelVocabulary } from "../src/lib/content/level-vocabulary.ts";
 import { contentRoot, targetLang } from "./content-path.ts";
 import { readSpec } from "./verify-beginner-core.ts";
-import type { SeedTextSource } from "./data/seed-texts-prs.ts";
+import type { SeedTextSource } from "./data/seed-text-source.ts";
 
 function arg(name: string): string | undefined {
   const at = process.argv.indexOf(`--${name}`);

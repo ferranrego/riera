@@ -16,7 +16,7 @@ import {
 import { PROFILES } from "../src/lib/lang/index.ts";
 import { contentRoot, targetLang } from "./content-path.ts";
 import { readSpec } from "./verify-beginner-core.ts";
-import type { SeedTextSource } from "./data/seed-texts-prs.ts";
+import type { SeedTextSource } from "./data/seed-text-source.ts";
 
 const lang = targetLang();
 const langProfile = PROFILES[lang as keyof typeof PROFILES];
