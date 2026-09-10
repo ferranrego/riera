@@ -1,5 +1,4 @@
 import { ca } from "./ca/index.ts";
-import { prs } from "./prs/index.ts";
 import type { LanguageProfile } from "./types.ts";
 
 export type {
@@ -11,11 +10,14 @@ export type {
 } from "./types.ts";
 
 /**
- * Every target language this codebase can build. Adding one is: implement the
- * profile, add it here, add `content/<code>/`, and point a second deployment at
- * it with NEXT_PUBLIC_TARGET_LANG.
+ * The language this repo teaches.
+ *
+ * This registry is deliberately kept - rather than inlining Catalan everywhere -
+ * because the sibling repo (Darya, Dari) has the identical file layout, which is
+ * what lets a shared change move between them with `git cherry-pick` instead of
+ * being rewritten. See CLAUDE.md, "Porting from Darya".
  */
-export const PROFILES = { prs, ca } satisfies Record<string, LanguageProfile>;
+export const PROFILES = { ca } satisfies Record<string, LanguageProfile>;
 
 export type TargetLang = keyof typeof PROFILES;
 
@@ -30,7 +32,7 @@ export type TargetLang = keyof typeof PROFILES;
  */
 export const REGISTERED_LANGS = Object.keys(PROFILES) as TargetLang[];
 
-const DEFAULT_LANG: TargetLang = "prs";
+const DEFAULT_LANG: TargetLang = "ca";
 
 function resolveProfile(): LanguageProfile {
   const code = process.env.NEXT_PUBLIC_TARGET_LANG;

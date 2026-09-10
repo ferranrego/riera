@@ -1,5 +1,5 @@
 {
-  "name": "dariapp",
+  "name": "riera",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -7,13 +7,12 @@
     "build:lexicon": "node scripts/build-lexicon.ts",
     "build:texts": "node scripts/build-seed-texts.ts",
     "dev": "next dev",
-    "dev:ca": "sh -c 'set -a; . ./.env.ca.local; set +a; NEXT_PUBLIC_TARGET_LANG=ca exec next dev'",
     "export:schemas": "node scripts/export-schemas.ts",
+    "gate": "pnpm typecheck && pnpm lint && pnpm test && pnpm validate:content",
     "link:content": "node scripts/link-content.ts",
     "lint": "eslint",
     "prebuild": "node scripts/link-content.ts",
     "predev": "node scripts/link-content.ts",
-    "predev:ca": "NEXT_PUBLIC_TARGET_LANG=ca node scripts/link-content.ts",
     "seed": "node --env-file=.env.local scripts/seed.ts",
     "smoke": "node --env-file=.env.local scripts/smoke-prod.ts",
     "start": "next start",
