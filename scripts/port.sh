@@ -40,7 +40,7 @@ for sha in "$@"; do
   removed=$( { git diff --cached --name-only; git diff --name-only --diff-filter=U; } \
     | sort -u | grep -E "(^|/)$OTHER(/|[.-])|(^|/)[^/]*-$OTHER\." || true )
   if [ -n "$removed" ]; then
-    echo "    dropping $SIBN-only files this repo does not carry:"
+    echo "    dropping Darya-only files this repo does not carry:"
     printf '      %s\n' $removed
     git rm -rq --ignore-unmatch $removed
   fi
