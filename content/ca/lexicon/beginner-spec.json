@@ -747,5 +747,58 @@
       "rodó",
       "quadrat"
     ]
+  },
+  "pragmaticFunctions": {
+    "_comment": "A learner who masters every category above can describe a room and state facts about their day, but cannot politely ask a stranger for anything. A language-pedagogy review found the gap directly in beginner-expressible.test.ts: of ~65 canonical sentences, not one was a request ('give me...'), a permission question ('can I...?'), an invitation, an agree/disagree exchange, or a repair strategy beyond a single fixed phrase. `closedClasses.politeness` covers greeting, farewell, thanks and one apology token and stops there - a reasonable floor, but nothing past it. These are the Council of Europe Threshold level / Instituto Cervantes PCIC A1-A2 'funciones' every first conversation actually needs, grouped by SPEECH ACT rather than by semantic domain the way `verbFunctions` is, because that is the axis the gap was found on. Entries here are the natural spoken phrase, not a textbook citation form - Catalan speakers say 'endavant' to grant permission and 'no puc' to decline, not a translated 'you may' or 'I am unable to'. `seure` is listed explicitly because the expressibility test asserts \"Puc seure aquí?\" and the draft's spec did not require it - it passed only because the old whitespace split in tag-beginner-core tagged it incidentally. Once that split was fixed the tag went away and the sentence failed, which is the checker working: a sentence the test claims a beginner can say has to be a sentence the spec actually requires the words for.",
+    "requestingFavour": [
+      "voldria",
+      "podries",
+      "un moment",
+      "un favor"
+    ],
+    "permission": [
+      "puc",
+      "es pot",
+      "no es pot",
+      "endavant",
+      "seure"
+    ],
+    "offeringInviting": [
+      "vols",
+      "t'agradaria",
+      "vine",
+      "convidar"
+    ],
+    "acceptingDeclining": [
+      "d'acord",
+      "amb molt de gust",
+      "no puc",
+      "acceptar"
+    ],
+    "agreeingDisagreeing": [
+      "estic d'acord",
+      "no estic d'acord",
+      "tens raó",
+      "és veritat"
+    ],
+    "suggesting": [
+      "i si",
+      "què et sembla",
+      "podríem",
+      "millor anem"
+    ],
+    "repair": [
+      "pots repetir",
+      "més a poc a poc",
+      "no entenc",
+      "què vol dir",
+      "com es diu"
+    ],
+    "apologising": [
+      "perdona",
+      "ho sento",
+      "no passa res",
+      "no et preocupis"
+    ]
   }
 }

@@ -773,7 +773,8 @@
       "exampleTarget": "Això no ho sé.",
       "exampleEn": "I don't know that.",
       "tags": [
-        "closed-class"
+        "closed-class",
+        "beginner-core"
       ]
     },
     {
@@ -992,7 +993,9 @@
       "variants": [],
       "exampleTarget": "Què ha passat?",
       "exampleEn": "What happened?",
-      "tags": []
+      "tags": [
+        "beginner-core"
+      ]
     },
     {
       "id": "lx-0178",
@@ -1938,7 +1941,9 @@
       "variants": [],
       "exampleTarget": "Et va semblar bé la proposta?",
       "exampleEn": "Did the proposal seem good to you?",
-      "tags": []
+      "tags": [
+        "beginner-core"
+      ]
     },
     {
       "id": "lx-0007",
@@ -1997,7 +2002,8 @@
       "exampleTarget": "Aquest cafè és millor.",
       "exampleEn": "This coffee is better.",
       "tags": [
-        "closed-class"
+        "closed-class",
+        "beginner-core"
       ]
     },
     {
@@ -2340,7 +2346,9 @@
       "variants": [],
       "exampleTarget": "Han arribat a un acord amistós.",
       "exampleEn": "They have reached an amicable agreement.",
-      "tags": []
+      "tags": [
+        "beginner-core"
+      ]
     },
     {
       "id": "lx-0316",
@@ -3119,7 +3127,9 @@
       "variants": [],
       "exampleTarget": "El vol té retard.",
       "exampleEn": "The flight is delayed.",
-      "tags": []
+      "tags": [
+        "beginner-core"
+      ]
     },
     {
       "id": "lx-3162",
@@ -5200,7 +5210,9 @@
       "variants": [],
       "exampleTarget": "Tens tota la raó.",
       "exampleEn": "You are absolutely right.",
-      "tags": []
+      "tags": [
+        "beginner-core"
+      ]
     },
     {
       "id": "lx-0101",
@@ -6799,7 +6811,9 @@
       "variants": [],
       "exampleTarget": "Digue'm la veritat.",
       "exampleEn": "Tell me the truth.",
-      "tags": []
+      "tags": [
+        "beginner-core"
+      ]
     },
     {
       "id": "lx-4144",
@@ -6814,7 +6828,8 @@
       "exampleTarget": "No puc acceptar aquesta oferta.",
       "exampleEn": "I cannot accept this offer.",
       "tags": [
-        "auto-added"
+        "auto-added",
+        "beginner-core"
       ]
     },
     {
@@ -7789,7 +7804,9 @@
       "variants": [],
       "exampleTarget": "Em pots fer un favor?",
       "exampleEn": "Can you do me a favor?",
-      "tags": []
+      "tags": [
+        "beginner-core"
+      ]
     },
     {
       "id": "lx-0782",
@@ -10640,7 +10657,8 @@
       "exampleTarget": "Vull convidar tots els meus amics a sopar per al meu aniversari.",
       "exampleEn": "I want to invite all my friends to dinner for my birthday.",
       "tags": [
-        "B1 Intermediate"
+        "B1 Intermediate",
+        "beginner-core"
       ]
     },
     {
@@ -14641,7 +14659,9 @@
       "variants": [],
       "exampleTarget": "Aquest plat té bon gust.",
       "exampleEn": "This dish has a good taste.",
-      "tags": []
+      "tags": [
+        "beginner-core"
+      ]
     },
     {
       "id": "lx-0786",
@@ -14673,8 +14693,7 @@
       "exampleTarget": "El meu millor amic té els ulls blaus i és naturalment ros.",
       "exampleEn": "My best friend has blue eyes and is naturally blonde.",
       "tags": [
-        "B1 Intermediate",
-        "beginner-core"
+        "B1 Intermediate"
       ]
     },
     {
@@ -17588,7 +17607,8 @@
       "exampleTarget": "Repeteixo l'exercici.",
       "exampleEn": "I repeat the exercise.",
       "tags": [
-        "Actions & Movement"
+        "Actions & Movement",
+        "beginner-core"
       ]
     },
     {
@@ -20229,8 +20249,7 @@
       "exampleTarget": "No et vull enfadar.",
       "exampleEn": "I do not want to make you angry.",
       "tags": [
-        "auto-added",
-        "beginner-core"
+        "auto-added"
       ]
     },
     {
@@ -21124,8 +21143,7 @@
       "exampleTarget": "Salo la carn.",
       "exampleEn": "I salt the meat.",
       "tags": [
-        "Actions & Movement",
-        "beginner-core"
+        "Actions & Movement"
       ]
     },
     {
@@ -50059,7 +50077,8 @@
       "exampleTarget": "Al final, la vaig perdonar.",
       "exampleEn": "In the end, I forgave her.",
       "tags": [
-        "auto-added"
+        "auto-added",
+        "beginner-core"
       ]
     },
     {
@@ -56090,7 +56109,8 @@
       "exampleTarget": "Em preocupa molt la seva salut.",
       "exampleEn": "Her health worries me a lot.",
       "tags": [
-        "auto-added"
+        "auto-added",
+        "beginner-core"
       ]
     },
     {

@@ -140,8 +140,14 @@ function main() {
   const entries: LexiconEntry[] = lexiconFileSchema.parse(
     JSON.parse(readFileSync(join(root, "lexicon", "lexicon.json"), "utf8")),
   ).entries;
-  const { buildIndex, matchKey, tokenize } = langProfile(lang).text;
+  const { buildIndex, matchKey, tokenize, generatedFormsByKey } = langProfile(lang).text;
   const index = buildIndex(entries);
+
+  const headwordByKey = new Map<string, LexiconEntry>();
+  for (const e of entries) {
+    const k = matchKey(e.targetNormalized);
+    if (!headwordByKey.has(k)) headwordByKey.set(k, e);
+  }
 
   /**
    * Present, teachable, *and* the same word: the resolver's morphological
@@ -156,6 +162,30 @@ function main() {
     const isMatch =
       matchKey(e.target) === wantedKey || e.variants.some((v) => matchKey(v) === wantedKey);
     return isMatch ? e : null;
+  };
+
+  /**
+   * Reachable as an INFLECTED form: either the lemma itself, or a surface this
+   * language's own paradigm generates for a teachable entry.
+   *
+   * `pragmaticFunctions` is the one category whose members are deliberately
+   * not citation forms - a learner asks with `voldria` and `puc`, not with
+   * `voler` and `poder`, and listing the infinitives instead would collapse
+   * eight speech acts into the same three verbs `verbFunctions` already has.
+   *
+   * This is NOT a relaxation of the lemma-identical rule that guards the other
+   * categories. That rule exists because the resolver's morphological fallback
+   * can land on an unrelated lexeme (`sec` "dry" -> `seure` "to sit"), the
+   * `registre`/`registrar` class one level removed. Asking the paradigm keeps
+   * exactly that guard: `puc` is a form `poder` really generates, and `sec` is
+   * not one `seure` generates, so the accident is still rejected.
+   */
+  const generatedByKey = generatedFormsByKey(entries, headwordByKey);
+  const inflected = (word: string): LexiconEntry | null => {
+    const hit = direct(word);
+    if (hit) return hit;
+    const g = generatedByKey.get(matchKey(word));
+    return g && isTeachable(g.entry) ? g.entry : null;
   };
 
   /**
@@ -210,8 +240,13 @@ function main() {
   }
 
   // --- pragmatic functions: every speech act must be covered ------------------
+  const sayable = (phrase: string): boolean => {
+    if (inflected(phrase)) return true;
+    const parts = tokenize(phrase);
+    return parts.length > 1 && parts.every((p) => inflected(p));
+  };
   for (const [fn, words] of Object.entries(spec.pragmaticFunctions)) {
-    const missing = words.filter((w) => !usable(w));
+    const missing = words.filter((w) => !sayable(w));
     required += words.length;
     met += words.length - missing.length;
     if (missing.length) gaps.push({ where: `pragmatic function: ${fn}`, missing });

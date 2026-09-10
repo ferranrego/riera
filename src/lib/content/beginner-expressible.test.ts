@@ -36,7 +36,7 @@ import { BEGINNER_CORE_TAG } from "./word-selection.ts";
  *     not to `costar`, because an authored headword outranks a generated verb
  *     form. The learner gets a gloss; it is the wrong one. Homograph
  *     disambiguation needs sentence context and is not built.
- *   - Multi-word entries (`خدا حافظ`, `si us plau`) cannot be reached through a
+ *   - Multi-word entries (`si us plau`) cannot be reached through a
  *     tokenizer that splits on whitespace, so they are asserted separately
  *     below rather than inside a sentence.
  */
@@ -117,102 +117,25 @@ const CA_SENTENCES = [
   "Moltes gràcies.",
   "Perdó, no entenc.",
   "Adeu, fins demà.",
-];
-
-const PRS_SENTENCES = [
-  // being, having, identity
-  "من از کابل هستم.",
-  "نام تو چیست؟",
-  "پدر من معلم است.",
-  "مادرم در شفاخانه کار می‌کند.",
-  "این برادر من است.",
-  "ما یک خانه خورد داریم.",
-  "من گشنه نیستم.",
-  "او دو پسر دارد.",
-  "ما چهار نفر هستیم.",
-  // description
-  "دریا آبی است.",
-  "خانه کلان بود.",
-  "پشک بسیار چاق است.",
-  "آن سگ خورد و سیاه است.",
-  "سیب سرخ و شیرین است.",
-  "چای تلخ است.",
-  "این چوکی بسیار کهنه است.",
-  "بستر نرم است.",
-  "گیلاس خالی است.",
-  "سرک تاریک است.",
-  // daily life
-  "سگ گوشت می‌خورد.",
-  "بشقاب‌ها بالای میز است.",
-  "پشک زیر میز خواب است.",
-  "من هر روز آب می‌نوشم.",
-  "من هر روز آب می‌خورم.",
-  "ما نان و پنیر می‌خوریم.",
-  "من بسیار کار می‌کنم.",
-  "دستهایم را می‌شویم.",
-  "من به مکتب می‌روم.",
-  "هر شام درس می‌خوانم.",
-  "من هفت ساعت می‌خوابم.",
-  // shopping and money
-  "قیمت سیب چند است؟",
-  "من سه تخم می‌خرم.",
-  "این کتاب بسیار قیمتی است.",
-  "من با پیسه می‌پردازم.",
-  "دکان طرف راست است.",
-  "به نمک و روغن ضرورت دارم.",
-  // place and direction
-  "تشناب کجا است؟",
-  "آشپزخانه خورد است.",
-  "پارک نزدیک است.",
-  "من در یک قریه زندگی می‌کنم.",
-  "بس دیر می‌رسد.",
-  "ما به بازار می‌رویم.",
-  "کتاب بالای چوکی است.",
-  // weather and time
-  "امروز آفتاب است.",
-  "دیروز باران بارید.",
-  "در زمستان هوا بسیار سرد است.",
-  "فردا به بازار می‌رویم.",
-  "در تابستان هوا گرم است.",
-  "حالا ساعت سه است.",
-  "امروز جمعه است.",
-  // people and feelings
-  "من بسیار مانده هستم.",
-  "اطفال خوش هستند.",
-  "من خواب دارم.",
-  "خواهرم غمگین است.",
-  "من موسیقی را دوست دارم.",
-  // asking
-  "آن مرد کی است؟",
-  "چی می‌خواهی بخوری؟",
-  "دوست تو کی می‌رسد؟",
-  "چرا نان نمی‌خوری؟",
-  "چطور هستی؟",
-  "تو دری گپ می‌زنی؟",
-  // polite
-  "سلام، چطور هستی؟",
-  "بسیار تشکر.",
-  "ببخشید، نمی‌فهمم.",
-  "تا فردا.",
   // pragmatic functions: requesting, permission, offering/inviting,
   // accepting/declining, agreeing/disagreeing, suggesting, repair,
   // apologising - the first-conversation moves the sentences above never
-  // exercised. See `content/prs/lexicon/beginner-spec.json`'s
+  // exercised. See `content/ca/lexicon/beginner-spec.json`'s
   // `pragmaticFunctions` block for why this group exists.
-  "لطفاً یک چای می‌خواهم.",
-  "خواهش می‌کنم، یک لحظه.",
-  "می‌توانم اینجا بمانم؟",
-  "اجازه است بیایم؟",
-  "می‌خواهی با ما بیایی؟",
-  "بیا با ما نان بخور.",
-  "خوب است، می‌آیم.",
-  "امکان ندارد، ببخشید. چیزی نیست.",
-  "من با تو موافق هستم.",
-  "من موافق نیستم.",
-  "چطور است اگر برویم؟",
-  "لطفاً تکرار کنید.",
-  "لطفاً آهسته گپ بزن.",
-  "من نمی‌فهمم. معنی این چی است؟",
+  "Voldria un cafè, si us plau.",
+  "Em pots ajudar, si us plau?",
+  "Puc seure aquí?",
+  "Es pot entrar?",
+  "Vols venir a la festa?",
+  "T'agradaria menjar amb nosaltres?",
+  "D'acord, anem-hi.",
+  "No puc, ho sento.",
+  "Estic d'acord amb tu.",
+  "No estic d'acord.",
+  "Què et sembla anar al parc?",
+  "Pots repetir, si us plau?",
+  "No entenc. Què vol dir això?",
+  "Perdona, arribo tard. No passa res.",
 ];
 
 /**
@@ -222,7 +145,7 @@ const PRS_SENTENCES = [
  * made it - a test in the default suite - unable to run in a deployment that
  * carries one language.
  */
-const SENTENCES: Record<string, string[]> = { ca: CA_SENTENCES, prs: PRS_SENTENCES };
+const SENTENCES: Record<string, string[]> = { ca: CA_SENTENCES };
 
 const LANGS = Object.entries(PROFILES)
   .filter(([lang]) => SENTENCES[lang])
@@ -271,16 +194,15 @@ describe.each(LANGS)("$lang: a beginner can say these", ({ lang, sentences, toke
 /**
  * Multi-word entries, asserted as whole strings.
  *
- * `خدا حافظ` and `si us plau` are single lexicon entries, so a whitespace
- * tokenizer can never reach them from inside a sentence - it asks for `حافظ`
- * and `plau`, which are not words anyone authored. Checking them here keeps the
+ * `si us plau` is a single lexicon entry, so a whitespace
+ * tokenizer can never reach it from inside a sentence - it asks for `plau`,
+ * which is not a word anyone authored. Checking it here keeps the
  * requirement honest instead of quietly dropping the commonest greeting in the
  * language from the test.
  */
 describe("multi-word entries resolve as phrases", () => {
   const PHRASES: Record<string, string[]> = {
     ca: ["si us plau", "bon dia", "bona nit", "per què"],
-    prs: ["خدا حافظ"],
   };
   const cases = Object.keys(PROFILES)
     .filter((lang) => PHRASES[lang])
